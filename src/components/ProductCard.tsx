@@ -11,7 +11,7 @@ import {
     CardHeader,
     CardTitle,
 } from './ui/card'
-import { ProductType } from '@/db/seeds'
+import { ProductType } from '@/data/sample-products'
 
 const inventoryTone = {
     'in-stock': 'bg-emerald-50 text-emerald-600 border-emerald-100',

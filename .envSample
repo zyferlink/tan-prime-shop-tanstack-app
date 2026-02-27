@@ -1,6 +1,6 @@
 # This is a sample .env file. Please create a '.env' file and fill in the appropriate values for your project keys.
 # Example:
-# DATABASE_URL=postgresql://[YOUR-SUPABASE-DB-URL]:[YOUR-PASSWORD]@aws-1-ap-south-1.pooler.supabase.com:[PORT]/postgres
+# DATABASE_URL=postgresql://[YOUR-SUPABASE-PROJECT-ID]:[YOUR-PASSWORD]@aws-1-ap-south-1.pooler.supabase.com:[PORT]/postgres
 # Replace the placeholders with your actual project configuration values.
 
-DATABASE_URL=postgresql://[YOUR-SUPERBASE-DB-URL]:[YOUR-PASSWORD]@aws-1-ap-south-1.pooler.supabase.com:[PORT]/postgres
+DATABASE_URL=postgresql://[YOUR-SUPERBASE-PROJECT-ID]:[YOUR-PASSWORD]@aws-1-ap-south-1.pooler.supabase.com:[PORT]/postgres
