@@ -5,7 +5,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
-import { ProductType, sampleProducts } from '@/db/seeds'
+import { ProductType, sampleOfflineProducts } from '@/data/sample-products'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowRightIcon } from 'lucide-react'
 
@@ -75,7 +75,7 @@ function App() {
                         </div>
                     </div>
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-6">
-                        {sampleProducts.map(
+                        {sampleOfflineProducts.map(
                             (product: ProductType, index: number) => (
                                 <ProductCard
                                     product={product}
