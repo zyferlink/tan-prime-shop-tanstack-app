@@ -7,9 +7,20 @@ import {
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowRightIcon } from 'lucide-react'
 
-export const Route = createFileRoute('/')({ component: App })
+export const Route = createFileRoute('/')({
+    component: App,
+    loader: async () => {
+        const response = await fetch('https://fakestoreapi.com/products')
+        const products = await response.json()
+        console.log('Server side data : ', products)
+        return { productData: products.slice(0, 4) }
+    },
+})
 
 function App() {
+    const { productData } = Route.useLoaderData()
+
+    console.log('Client side data : ', productData)
     return (
         <div className="space-y-12 bg-linear-to-b from-slate-50 via-white to-slate-50 p-6">
             <section>
