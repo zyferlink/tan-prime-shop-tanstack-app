@@ -13,7 +13,7 @@ export default function Header() {
 
                         <div className="flex flex-col">
                             <span className="text-sm font-semibold text-slate-900 dark:text-white">
-                                StartShop
+                                TanPrime Shop
                             </span>
                         </div>
                     </Link>
