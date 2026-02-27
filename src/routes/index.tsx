@@ -1,9 +1,11 @@
+import { ProductCard } from '@/components/ProductCard'
 import {
     Card,
     CardDescription,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
+import { ProductType, sampleProducts } from '@/db/seeds'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowRightIcon } from 'lucide-react'
 
@@ -73,9 +75,14 @@ function App() {
                         </div>
                     </div>
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-6">
-                        {productData.map((product: any, index: number) => (
-                            <span>{product.title}</span>
-                        ))}
+                        {sampleProducts.map(
+                            (product: ProductType, index: number) => (
+                                <ProductCard
+                                    product={product}
+                                    key={`product-${index}`}
+                                />
+                            ),
+                        )}
                     </div>
                 </Card>
             </section>

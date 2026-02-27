@@ -1,3 +1,4 @@
+import { ProductCard } from '@/components/ProductCard'
 import { Button } from '@/components/ui/button'
 import {
     Card,
@@ -5,6 +6,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
+import { ProductType, sampleProducts } from '@/db/seeds'
 import { createFileRoute } from '@tanstack/react-router'
 import { createMiddleware, createServerFn, json } from '@tanstack/react-start'
 
@@ -71,7 +73,18 @@ function RouteComponent() {
                     </div>
                 </Card>
             </section>
-            <section></section>
+            <section>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {sampleProducts.map(
+                        (product: ProductType, index: number) => (
+                            <ProductCard
+                                product={product}
+                                key={`product-${index}`}
+                            />
+                        ),
+                    )}
+                </div>
+            </section>
         </div>
     )
 }
