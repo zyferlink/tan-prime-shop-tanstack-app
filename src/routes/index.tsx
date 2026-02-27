@@ -72,6 +72,11 @@ function App() {
                             </Link>
                         </div>
                     </div>
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-6">
+                        {productData.map((product: any, index: number) => (
+                            <span>{product.title}</span>
+                        ))}
+                    </div>
                 </Card>
             </section>
         </div>
