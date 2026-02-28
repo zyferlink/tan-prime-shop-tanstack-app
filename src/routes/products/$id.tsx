@@ -1,3 +1,4 @@
+import { RecommendedProducts } from '@/components/RecommendedProducts'
 import { Button } from '@/components/ui/button'
 import {
     Card,
@@ -8,9 +9,18 @@ import {
     CardTitle,
 } from '@/components/ui/card'
 import { ProductSelect } from '@/db/schema'
-import { createFileRoute, Link, notFound } from '@tanstack/react-router'
+import {
+    createFileRoute,
+    Link,
+    notFound,
+    useRouter,
+} from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { ArrowLeftIcon, ShoppingBagIcon, SparklesIcon } from 'lucide-react'
+import { Suspense } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
+import { mutateCartFn } from '../cart'
+import { useQueryClient } from '@tanstack/react-query'
 
 const fetchProductById = createServerFn({ method: 'POST' })
     .inputValidator((data: { id: string }) => data)
@@ -58,7 +68,7 @@ export const Route = createFileRoute('/products/$id')({
                     name: 'canonical',
                     content:
                         process.env.NODE_ENV === 'production'
-                            ? `[YOUR PRODUCTION URL]${product?.id}`
+                            ? `YOUR-PRODUCTION-APP-URL-HERE/products/${product?.id}`
                             : `http://localhost:3000/products/${product?.id}` ||
                               `localhost:3000/products/${product?.id}`,
                 },
@@ -74,7 +84,9 @@ export const Route = createFileRoute('/products/$id')({
 })
 
 function RouteComponent() {
-    const { product } = Route.useLoaderData()
+    const router = useRouter()
+    const queryClient = useQueryClient()
+    const { product, recommendedProducts } = Route.useLoaderData()
     return (
         <div>
             <Card className="max-w-4xl mx-auto p-6">
@@ -141,7 +153,31 @@ function RouteComponent() {
                             </CardContent>
                             <CardFooter className="pt-0 flex items-center justify-between border-t-0 bg-transparent">
                                 <div className="flex flex-wrap gap-3">
-                                    <Button className="bg-slate-900 px-4 text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:bg-white dark:text-slate-900">
+                                    <Button
+                                        className="bg-slate-900 px-4 text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:bg-white dark:text-slate-900"
+                                        onClick={async (e) => {
+                                            console.log('add to cart')
+                                            e.preventDefault()
+                                            e.stopPropagation()
+                                            await mutateCartFn({
+                                                data: {
+                                                    action: 'add',
+                                                    productId: product.id,
+                                                    quantity: 1,
+                                                },
+                                            })
+                                            await router.invalidate({
+                                                sync: true,
+                                            })
+                                            await queryClient.invalidateQueries(
+                                                {
+                                                    queryKey: [
+                                                        'cart-items-data',
+                                                    ],
+                                                },
+                                            )
+                                        }}
+                                    >
                                         <ShoppingBagIcon size={16} />
                                         Add to cart
                                     </Button>
@@ -156,6 +192,32 @@ function RouteComponent() {
                         </div>
                     </div>
                 </Card>
+
+                <div className="mb-6">
+                    <Suspense
+                        fallback={
+                            <div>
+                                <h2 className="text-2xl font-bold my-4">
+                                    Recommended Products
+                                </h2>
+                                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                                    {Array.from({ length: 6 }).map(
+                                        (_, index) => (
+                                            <Skeleton
+                                                key={index}
+                                                className="w-full h-48"
+                                            />
+                                        ),
+                                    )}
+                                </div>
+                            </div>
+                        }
+                    >
+                        <RecommendedProducts
+                            recommendedProducts={recommendedProducts}
+                        />
+                    </Suspense>
+                </div>
             </Card>
         </div>
     )
