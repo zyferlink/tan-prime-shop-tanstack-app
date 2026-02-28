@@ -5,8 +5,9 @@
 const config = {
   trailingComma: "all",
   tabWidth: 4,
-  semi: false,
+  semi: true,
   singleQuote: true,
+  jsxSingleQuote: false,
 };
 
 export default config;

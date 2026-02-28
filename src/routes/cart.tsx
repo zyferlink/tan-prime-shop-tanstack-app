@@ -174,7 +174,7 @@ function CartPage() {
                                         min={1}
                                         max={99}
                                         value={item.quantity}
-                                        onChange={(event) => {}}
+                                        onChange={(_) => {}}
                                         className="h-9 w-14 rounded-md border border-slate-200 bg-white text-center text-sm font-semibold shadow-xs dark:border-slate-800 dark:bg-slate-900"
                                     />
                                     <Button

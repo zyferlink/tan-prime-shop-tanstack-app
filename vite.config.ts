@@ -10,9 +10,9 @@ const config = defineConfig({
   plugins: [
     devtools(),
     nitro(),
-    // this is the plugin that enables path aliases
     viteTsConfigPaths({
-      projects: ['./tsconfig.json'],
+      // this is the plugin that enables path aliases
+      projects: ['./tsconfig.json'], 
     }),
     tailwindcss(),
     tanstackStart(),
@@ -20,10 +20,12 @@ const config = defineConfig({
   ],
   ssr: {
     noExternal: [],
-    external: ['pg', 'pg-native'],
+    // PostgreSQL native modules excluded from SSR bundle
+    external: ['pg', 'pg-native'], 
   },
   optimizeDeps: {
-    exclude: ['pg', 'pg-native'],
+    // Prevent Vite from bundling native dependencies
+    exclude: ['pg', 'pg-native'], 
   },
 })
 
