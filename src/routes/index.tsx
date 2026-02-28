@@ -7,20 +7,27 @@ import {
 } from '@/components/ui/card'
 import { ProductSelect } from '@/db/schema'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { createServerFn } from '@tanstack/react-start'
 import { ArrowRightIcon } from 'lucide-react'
+
+const fetchProductsFn = createServerFn({ method: 'GET' }).handler(async () => {
+    const { getRecommendedProducts } = await import('@/data/products')
+    const products = await getRecommendedProducts()
+    return products
+})
 
 export const Route = createFileRoute('/')({
     component: App,
     loader: async () => {
-        const { getRecommendedProducts } = await import('@/data/products')
-        const products = await getRecommendedProducts()
-        return products
+        // This runs on server during SSR AND on client during navigation
+        return fetchProductsFn()
     },
 })
 
-function App() {
+async function App() {
     const products = Route.useLoaderData()
 
+    console.log('--client products--', products)
     return (
         <div className="space-y-12 bg-linear-to-b from-slate-50 via-white to-slate-50 p-6">
             <section>
@@ -30,7 +37,7 @@ function App() {
                     </p>
                     <CardTitle className="text-4xl font-bold leading-tight text-slate-900 dark:text-white max-w-2xl">
                         <h1>
-                            TanPrime Shop - Your one-stop shop for all your
+                            TanPrime Shop - Your one stop shop for all your
                             needs
                         </h1>
                     </CardTitle>
@@ -73,14 +80,12 @@ function App() {
                         </div>
                     </div>
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-6">
-                        {products.map(
-                            (product: ProductSelect, index: number) => (
-                                <ProductCard
-                                    key={`product-${index}`}
-                                    product={product}
-                                />
-                            ),
-                        )}
+                        {products.map((product: ProductSelect, index) => (
+                            <ProductCard
+                                product={product}
+                                key={`product-${index}`}
+                            />
+                        ))}
                     </div>
                 </Card>
             </section>
