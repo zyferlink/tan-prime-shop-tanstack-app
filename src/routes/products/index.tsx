@@ -1,20 +1,20 @@
 import { ProductCard } from '@/components/ProductCard'
-import { Button } from '@/components/ui/button'
 import {
     Card,
     CardDescription,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
-import { ProductType, sampleOfflineProducts } from '@/data/sample-products'
+import { ProductSelect } from '@/db/schema'
 import { createFileRoute } from '@tanstack/react-router'
 import { createMiddleware, createServerFn, json } from '@tanstack/react-start'
 
 const fetchProducts = createServerFn({ method: 'GET' }).handler(async () => {
     // Map products to ensure all fields match ProductCard expectations
-    const response = await fetch('https://fakestoreapi.com/products')
+    const { getAllProducts } = await import('@/data/products')
+    const data = await getAllProducts()
 
-    return response.json()
+    return data
 })
 
 const loggerMiddleware = createMiddleware().server(
@@ -31,7 +31,7 @@ const loggerMiddleware = createMiddleware().server(
 
 export const Route = createFileRoute('/products/')({
     component: RouteComponent,
-    loader: async (ctx) => {
+    loader: async (_) => {
         console.log('---loader--')
         return fetchProducts()
     },
@@ -50,6 +50,7 @@ export const Route = createFileRoute('/products/')({
 })
 
 function RouteComponent() {
+    const products = Route.useLoaderData()
     return (
         <div className="space-y-6">
             <section className="space-y-4 max-w-6xl mx-auto">
@@ -75,14 +76,12 @@ function RouteComponent() {
             </section>
             <section>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {sampleOfflineProducts.map(
-                        (product: ProductType, index: number) => (
-                            <ProductCard
-                                product={product}
-                                key={`product-${index}`}
-                            />
-                        ),
-                    )}
+                    {products.map((product: ProductSelect, index: number) => (
+                        <ProductCard
+                            product={product}
+                            key={`product-${index}`}
+                        />
+                    ))}
                 </div>
             </section>
         </div>

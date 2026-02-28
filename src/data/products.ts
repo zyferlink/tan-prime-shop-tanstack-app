@@ -3,6 +3,16 @@ import { products } from '@/db/schema'
 import type { ProductInsert, ProductSelect } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 
+export async function getAllProducts() {
+  try {
+    const productsData = await db.select().from(products)
+    return productsData
+  } catch (error) {
+    console.error('Error getting all products:', error)
+    return []
+  }
+}
+
 export async function getRecommendedProducts() {
   try {
     const productsData = await db.select().from(products).limit(3)
@@ -12,6 +22,7 @@ export async function getRecommendedProducts() {
     return []
   }
 }
+
 
 export const sampleProducts: ProductInsert[] = [
   {
