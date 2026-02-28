@@ -23,6 +23,20 @@ export async function getRecommendedProducts() {
   }
 }
 
+export async function getProductById(id: string) {
+  try {
+    const product = await db
+      .select()
+      .from(products)
+      .where(eq(products.id, id))
+      .limit(1)
+    return product?.[0] ?? null
+  } catch (error) {
+    console.error('Error getting product by id:', error)
+    return null
+  }
+}
+
 
 export const sampleProducts: ProductInsert[] = [
   {
