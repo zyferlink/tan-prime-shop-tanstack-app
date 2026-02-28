@@ -37,6 +37,25 @@ export async function getProductById(id: string) {
   }
 }
 
+export async function createProduct(
+  data: ProductInsert,
+): Promise<ProductSelect> {
+  try {
+    const result = await db.insert(products).values(data).returning()
+    const product = result[0]
+    if (!product) {
+      throw new Error(
+        'Failed to create product: no product returned from database',
+      )
+    }
+
+    return product
+  } catch (error) {
+    console.error('Error creating product', error)
+    throw error
+  }
+}
+
 
 export const sampleProducts: ProductInsert[] = [
   {

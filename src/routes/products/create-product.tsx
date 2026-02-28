@@ -1,4 +1,10 @@
-import { BadgeValue, InventoryValue } from '@/db/schema'
+import {
+    BadgeValue,
+    inventoryEnum,
+    InventoryValue,
+    ProductInsert,
+    ProductSelect,
+} from '@/db/schema'
 import { createFileRoute, useNavigate, useRouter } from '@tanstack/react-router'
 import { z } from 'zod'
 import { useForm } from '@tanstack/react-form'
@@ -21,6 +27,7 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
+import { createServerFn } from '@tanstack/react-start'
 
 export const Route = createFileRoute('/products/create-product')({
     component: RouteComponent,
@@ -44,6 +51,31 @@ const productSchema = z.object({
         .max(512, 'Image must be 512 chars or less'),
     inventory: z.enum(['in-stock', 'backorder', 'preorder']),
 })
+
+type CreateProductData = {
+    name: string
+    description: string
+    price: string
+    image: string
+    badge?: 'New' | 'Sale' | 'Featured' | 'Limited'
+    inventory: 'in-stock' | 'backorder' | 'preorder'
+}
+
+const createProductServerFn = createServerFn({ method: 'POST' })
+    .inputValidator((data: CreateProductData) => data)
+    .handler(async ({ data }): Promise<ProductSelect> => {
+        //
+        const { createProduct } = await import('@/data/products')
+        const productData: ProductInsert = {
+            name: data.name,
+            description: data.description,
+            price: data.price,
+            image: data.image,
+            badge: data.badge ?? null,
+            inventory: data.inventory,
+        }
+        return createProduct(productData)
+    })
 
 function RouteComponent() {
     const navigate = useNavigate()
@@ -73,6 +105,20 @@ function RouteComponent() {
         onSubmit: async ({ value }) => {
             // TODO: Implement form submission
             try {
+                await createProductServerFn({
+                    data: {
+                        name: value.name,
+                        description: value.description,
+                        price: value.price,
+                        image: value.image,
+                        badge: value.badge,
+                        inventory: value.inventory,
+                    },
+                })
+
+                await router.invalidate({ sync: true })
+
+                navigate({ to: '/products' })
             } catch (error) {
                 console.error('Error creating product', error)
             }
@@ -113,7 +159,7 @@ function RouteComponent() {
                                             id={field.name}
                                             name={field.name}
                                             value={field.state.value}
-                                            onChange={(e: any) =>
+                                            onChange={(e) =>
                                                 field.handleChange(
                                                     e.target.value,
                                                 )
@@ -140,7 +186,7 @@ function RouteComponent() {
                                             id={field.name}
                                             name={field.name}
                                             value={field.state.value}
-                                            onChange={(e: any) =>
+                                            onChange={(e) =>
                                                 field.handleChange(
                                                     e.target.value,
                                                 )
@@ -169,7 +215,7 @@ function RouteComponent() {
                                             name={field.name}
                                             value={field.state.value}
                                             step="0.01"
-                                            onChange={(e: any) =>
+                                            onChange={(e) =>
                                                 field.handleChange(
                                                     e.target.value,
                                                 )
@@ -198,7 +244,7 @@ function RouteComponent() {
                                             name={field.name}
                                             value={field.state.value}
                                             step="0.01"
-                                            onChange={(e: any) =>
+                                            onChange={(e) =>
                                                 field.handleChange(
                                                     e.target.value,
                                                 )
@@ -223,7 +269,7 @@ function RouteComponent() {
                                         </Label>
                                         <Select
                                             value={field.state.value ?? ''}
-                                            onValueChange={(value: any) =>
+                                            onValueChange={(value) =>
                                                 field.handleChange(
                                                     value === ''
                                                         ? undefined
@@ -238,7 +284,7 @@ function RouteComponent() {
                                                 <SelectValue />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value="">
+                                                <SelectItem value="None">
                                                     None
                                                 </SelectItem>
                                                 <SelectItem value="New">
@@ -269,7 +315,7 @@ function RouteComponent() {
                                         </Label>
                                         <Select
                                             value={field.state.value}
-                                            onValueChange={(value: any) =>
+                                            onValueChange={(value) =>
                                                 field.handleChange(
                                                     value as InventoryValue,
                                                 )
