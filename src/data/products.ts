@@ -1,4 +1,17 @@
-import { ProductInsert } from "@/db/schema";
+import { db } from '@/db'
+import { products } from '@/db/schema'
+import type { ProductInsert, ProductSelect } from '@/db/schema'
+import { eq } from 'drizzle-orm'
+
+export async function getRecommendedProducts() {
+  try {
+    const productsData = await db.select().from(products).limit(3)
+    return productsData
+  } catch (error) {
+    console.error('Error getting recommended products:', error)
+    return []
+  }
+}
 
 export const sampleProducts: ProductInsert[] = [
   {

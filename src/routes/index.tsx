@@ -5,24 +5,23 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
+import { getRecommendedProducts } from '@/data/products'
 import { ProductType, sampleOfflineProducts } from '@/data/sample-products'
+import { ProductInsert, ProductSelect } from '@/db/schema'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowRightIcon } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
     component: App,
     loader: async () => {
-        const response = await fetch('https://fakestoreapi.com/products')
-        const products = await response.json()
-        console.log('Server side data : ', products)
-        return { productData: products.slice(0, 4) }
+        const products = await getRecommendedProducts()
+        return { products }
     },
 })
 
 function App() {
-    const { productData } = Route.useLoaderData()
+    const { products } = Route.useLoaderData()
 
-    console.log('Client side data : ', productData)
     return (
         <div className="space-y-12 bg-linear-to-b from-slate-50 via-white to-slate-50 p-6">
             <section>
@@ -75,11 +74,11 @@ function App() {
                         </div>
                     </div>
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-6">
-                        {sampleOfflineProducts.map(
-                            (product: ProductType, index: number) => (
+                        {products.map(
+                            (product: ProductSelect, index: number) => (
                                 <ProductCard
-                                    product={product}
                                     key={`product-${index}`}
+                                    product={product}
                                 />
                             ),
                         )}

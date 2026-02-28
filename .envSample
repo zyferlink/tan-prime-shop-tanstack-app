@@ -3,4 +3,6 @@
 # DATABASE_URL=postgresql://[YOUR-SUPABASE-PROJECT-ID]:[YOUR-PASSWORD]@aws-1-ap-south-1.pooler.supabase.com:[PORT]/postgres
 # Replace the placeholders with your actual project configuration values.
 
+NITRO_PRESET=node-server
+NODE_ENV=production
 DATABASE_URL=postgresql://[YOUR-SUPERBASE-PROJECT-ID]:[YOUR-PASSWORD]@aws-1-ap-south-1.pooler.supabase.com:[PORT]/postgres
