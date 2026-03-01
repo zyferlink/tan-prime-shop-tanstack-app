@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
-import { ShoppingBag, ShoppingBasket, ShoppingCart } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 
 const getCartItemsCount = createServerFn({ method: 'GET' }).handler(async () => {
   const { getCartItemsCount } = await import('@/data/cart.server');
