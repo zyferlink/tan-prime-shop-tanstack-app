@@ -23,7 +23,7 @@ async function App() {
 
   console.log('--client products--', products);
   return (
-    <div className="space-y-12">
+    <div className="space-y-8">
       <section>
         <Card className="p-8 shadow-md bg-white/80 ">
           <CardTitle>
@@ -34,7 +34,12 @@ async function App() {
 
           <CardDescription className="text-slate-900 dark:text-white max-w-3xl">
             <div className="flex sm:flex-row flex-col gap-7 items-center justify-center sm:justify-start">
-              <img src="/tanstack-circle-logo.png" alt="" className="h-full w-48 object-contain" loading="lazy" />
+              <img
+                src="/tanstack-circle-logo.png"
+                alt="TanPrime Shop Image"
+                className="h-full w-48 object-contain"
+                loading="lazy"
+              />
               <div className="flex-col space-y-2 text-center sm:text-start">
                 <h1 className="text-5xl font-bold leading-tight">
                   <span className="text-amber-700/80 font-black">TAN</span>PRIME SHOP
