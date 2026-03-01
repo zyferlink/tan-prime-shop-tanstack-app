@@ -1,8 +1,12 @@
-# TAN-PRIEM SHOP
+# TAN-PRIEM SHOP (TanStack Start App)
 
 A modern e-commerce platform built with TanStack Start. Fast, type-safe, and ready for production.
 
 TanStack Start is a full-stack React framework that provides server-side rendering, static site generation, and API routes with unparalleled type safety. It combines the best of React with the power of TanStack Router and TanStack Query for a seamless developer experience.
+
+<p align="center">
+  <img src="./public/tan-prime-screenshot-1.jpg" alt="homepage screenshot" />
+</p>
 
 ## What's Inside
 
