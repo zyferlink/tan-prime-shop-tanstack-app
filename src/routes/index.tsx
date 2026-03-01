@@ -23,23 +23,35 @@ async function App() {
 
   console.log('--client products--', products);
   return (
-    <div className="space-y-12 bg-linear-to-b from-slate-50 via-white to-slate-50 p-6">
+    <div className="space-y-12">
       <section>
-        <Card className="p-8 shadow-md bg-white/80">
-          <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">
-            Your favourite e-commerce store
-          </p>
-          <CardTitle className="text-4xl font-bold leading-tight text-slate-900 dark:text-white max-w-2xl">
-            <h1>StartShop - Your one-stop shop for all your needs</h1>
+        <Card className="p-8 shadow-md bg-white/80 ">
+          <CardTitle>
+            <p className="text-sm w-fit font-semibold text-center uppercase tracking-wide text-blue-600">
+              Your favourite e-commerce store
+            </p>
           </CardTitle>
-          <CardDescription>
-            <Link
-              to="/products"
-              className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl"
-            >
-              Browse products
-              <ArrowRightIcon size={16} />
-            </Link>
+
+          <CardDescription className="text-slate-900 dark:text-white max-w-3xl">
+            <div className="flex sm:flex-row flex-col gap-7 items-center justify-center sm:justify-start">
+              <img src="/tanstack-circle-logo.png" alt="" className="h-full w-48 object-contain" loading="lazy" />
+              <div className="flex-col space-y-2 text-center sm:text-start">
+                <h1 className="text-5xl font-bold leading-tight">
+                  <span className="text-amber-700/80 font-black">TAN</span>PRIME SHOP
+                </h1>
+                <p className="text-lg font-medium">
+                  Shop the best deals, discover quality products, and enjoy fast delivery at unbeatable prices!
+                </p>
+
+                <Link
+                  to="/products"
+                  className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl"
+                >
+                  Browse products
+                  <ArrowRightIcon size={16} />
+                </Link>
+              </div>
+            </div>
           </CardDescription>
         </Card>
       </section>
@@ -49,12 +61,8 @@ async function App() {
           <div className="flex items-center justify-between">
             <div>
               <CardHeader className="px-0">
-                <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">
-                  Recommended
-                </p>
-                <CardTitle className="text-2xl font-semibold text-slate-900">
-                  Starter picks from the catalog
-                </CardTitle>
+                <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Recommended</p>
+                <CardTitle className="text-2xl font-semibold text-slate-900">Starter picks from the catalog</CardTitle>
               </CardHeader>
               <CardDescription className="text-sm text-slate-600">
                 Curated items to try the cart and detail pages quickly.
