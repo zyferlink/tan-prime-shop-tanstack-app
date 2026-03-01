@@ -17,13 +17,8 @@ export function ProductCard({ product }: { product: ProductSelect }) {
   const router = useRouter();
   const queryClient = useQueryClient();
   return (
-    <Link
-      to="/products/$id"
-      params={{ id: product.id }}
-      className="cursor-pointer h-full hover:-translate-y-1
-     hover:shadow-lg transition"
-    >
-      <Card className="px-2 py-4">
+    <Link to="/products/$id" params={{ id: product.id }} className="cursor-pointer h-full ">
+      <Card className="px-2 py-4 hover:-translate-y-1 hover:shadow-lg transition">
         <CardHeader className="gap-2">
           <div className="flex items-center gap-2">
             {product.badge && (
@@ -32,8 +27,10 @@ export function ProductCard({ product }: { product: ProductSelect }) {
               </span>
             )}
           </div>
+
+          <img src={product.image} alt="TanPrime Shop Image" className="h-28 w-full object-contain" loading="lazy" />
           <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
-          <CardDescription>{product.description}</CardDescription>
+          <CardDescription className="line-clamp-2">{product.description}</CardDescription>
         </CardHeader>
 
         <CardContent className="flex items-center justify-between">
