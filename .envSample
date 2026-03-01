@@ -1,0 +1,9 @@
+# This is a sample .env file. Please create a '.env' file and fill in the appropriate values for your project keys.
+# Example:
+# DATABASE_URL=postgresql://[YOUR-SUPABASE-PROJECT-ID]:[YOUR-PASSWORD]@aws-1-ap-south-1.pooler.supabase.com:[PORT]/postgres
+# Replace the placeholders with your actual project configuration values.
+
+NITRO_PRESET=node-server
+NODE_ENV=development
+# NODE_ENV=development | production
+DATABASE_URL=postgresql://[YOUR-SUPERBASE-PROJECT-ID]:[YOUR-PASSWORD]@aws-1-ap-south-1.pooler.supabase.com:[PORT]/postgres
