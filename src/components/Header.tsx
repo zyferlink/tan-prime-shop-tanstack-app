@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, ShoppingBasket, ShoppingCart } from 'lucide-react';
 
 const getCartItemsCount = createServerFn({ method: 'GET' }).handler(async () => {
   const { getCartItemsCount } = await import('@/data/cart.server');
@@ -19,28 +19,22 @@ export default function Header() {
       <div className="mx-auto max-w-6xl px-4 py-3 items-center justify-between flex">
         <div className="flex items-center gap-3">
           <Link to="/" className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-800">
-              <ShoppingBag size={20} />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-800">
+              <ShoppingCart size={20} />
             </div>
 
             <div className="flex flex-col">
-              <span className="text-sm font-semibold text-slate-900 dark:text-white">
-                TanPrime Shop
-              </span>
+              <p className="text-sm font-semibold text-slate-800 dark:text-white">
+                <span className="font-bold text-amber-700">TAN</span>PRIME
+              </p>
             </div>
           </Link>
 
           <nav className="hidden items-center gap-3 text-sm font-medium text-slate-700 dark:text-slate-200 sm:flex">
-            <Link
-              to="/"
-              className="rounded-lg px-3 py-1 transition hover:bg-slate-100 dark:hover:bg-slate-800"
-            >
+            <Link to="/" className="rounded-lg px-3 py-1 transition hover:bg-slate-100 dark:hover:bg-slate-800">
               Home
             </Link>
-            <Link
-              to="/products"
-              className="rounded-lg px-3 py-1 transition hover:bg-slate-100 dark:hover:bg-slate-800"
-            >
+            <Link to="/products" className="rounded-lg px-3 py-1 transition hover:bg-slate-100 dark:hover:bg-slate-800">
               Products
             </Link>
             <Link to="/products/create-product">Create Product</Link>
